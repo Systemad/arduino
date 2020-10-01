@@ -10,6 +10,9 @@ int delayTime = 500;
 int fadeAmount = 1;
 int brightness = 0;
 
+unsigned long currentTime;
+unsigned long loopTime;
+
 
 void setup() {
   Serial.begin(115200);
@@ -20,6 +23,9 @@ void setup() {
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
+
+  currentTime = millis();
+  loopTime = currentTime;
 }
 
 void loop() {
@@ -28,7 +34,7 @@ void loop() {
   int mappedValue = map(inputVal, 0, 1023, 0, 100);
   int buttonState = digitalRead(key1);
   int buttonTwoState = digitalRead(key2);
-
+  currentTime = millis();
   fadeAmount = mappedValue;
   
   if (buttonState == HIGH){
@@ -58,7 +64,11 @@ void loop() {
     fade(fadeAmount, brightness);
   } else if (keyTwoCounter == 2){
     //rainbow(rDirection, gDirection, bDirection, redValue, greenValue, blueValue);
-    rainbow();
+    rainbow(); 
+    //if(currentTime >=(loopTime + 30)){
+    //  rainbow(); 
+    //  loopTime = currentTime;
+    //}
   }
   if(keyTwoCounter == 3){
     keyTwoCounter = 0;
@@ -88,5 +98,4 @@ void rainbow(){
     if (blueValue >= 255 || blueValue <= 0){
         bDirection = bDirection * -1;
     }
-    delay(50); 
 }

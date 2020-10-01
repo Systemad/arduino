@@ -9,9 +9,8 @@ void fade(int brightness, int fadeAmount){
     brightness += fadeAmount;
 
     if (brightness <= 0 || brightness >= 255) {
-      fadeAmount = 100; //-fadeAmount * 50;
+      fadeAmount = fadeAmount;
     }
-  delay(30);
 }
 /*
 void rainbow(int redValue, int greenValue, int blueValue, int rDirection, int gDirection, int bDirection){
