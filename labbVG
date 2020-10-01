@@ -1,0 +1,67 @@
+const int BUTTON1 = 8;
+const int BUTTON2 = 12;
+const int analog_ip = A0;
+
+int red_light_pin= 11;
+int green_light_pin = 10;
+int blue_light_pin = 9;
+int inputVal = 0;
+
+int BUTTONstate1 = 0;
+int BUTTONstate2 = 0;
+int key1 = 0;
+
+
+void setup()
+{
+  pinMode(BUTTON1, INPUT);
+  pinMode(BUTTON2, INPUT);
+  pinMode(red_light_pin, OUTPUT);
+  pinMode(green_light_pin, OUTPUT);
+  pinMode(blue_light_pin, OUTPUT);
+  RBG_color(255, 0, 255); // Magenta
+}
+
+void loop()
+{
+  
+  BUTTONstate1 = digitalRead(BUTTON1);
+
+  if (BUTTONstate1 == HIGH)
+  {
+    key1 = 1;
+    RBG_color(0, 0, 255); // Green
+  } 
+
+  BUTTONstate2 = digitalRead(BUTTON2);
+  if (BUTTONstate2 == HIGH)
+  {
+      if(key1){
+            RBG_color(0, 255, 0); // BLUE
+      } else {
+            RBG_color(255, 0, 0); // RED
+      }
+  } 
+  /*
+  if(!pressed){
+    if(mapped > 0 && mapped < 25){
+      RBG_color(255, 0, 0); // RED
+    } else if(mapped > 26 && mapped < 50){
+      RBG_color(0, 255, 0); // BLUE
+    } else if(mapped > 51 && mapped < 100){
+      RBG_color(0, 0, 255); // GREEN
+    }
+  }
+  */
+}
+
+void RBG_color(int red_light_value, int green_light_value, int blue_light_value)
+ {
+  analogWrite(red_light_pin, red_light_value);
+  analogWrite(green_light_pin, green_light_value);
+  analogWrite(blue_light_pin, blue_light_value);
+}
+
+void blink(int one, int two, int three){
+  RBG_color(one, two, three);
+}
