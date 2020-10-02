@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 #include "pins.h"
 
 void fade(int brightness, int fadeAmount){
@@ -12,29 +12,7 @@ void fade(int brightness, int fadeAmount){
       fadeAmount = fadeAmount;
     }
 }
-/*
-void rainbow(int redValue, int greenValue, int blueValue, int rDirection, int gDirection, int bDirection){
-    Serial.println("Rainbow mode ON.");
-    analogWrite(redPin, redValue);
-    analogWrite(greenPin, greenValue);
-    analogWrite(bluePin, blueValue);
-    
-    redValue = redValue + rDirection;  
-    greenValue = greenValue + gDirection;
-    blueValue = blueValue + bDirection;
-        
-    if (redValue >= 255 || redValue <= 0){
-        rDirection = rDirection * -1;
-    }
-    if (greenValue >= 255 || greenValue <= 0){
-        gDirection = gDirection * -1;
-    }
-    if (blueValue >= 255 || blueValue <= 0){
-        bDirection = bDirection * -1;
-    }
-    delay(100); 
-}
-*/
+
 void keyOnePress(int keyOneCounter){    
   if (keyOneCounter == 1){
     Serial.println("Red.");

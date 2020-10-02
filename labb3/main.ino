@@ -9,10 +9,9 @@ int delayTime = 500;
 int fadeAmount = 1;
 int brightness = 0;
 
-const long interval = 1000;    
-unsigned long previousMillis = 0; 
+bool buttonOneState;
 
-unsigned long time_for_fadestep;
+unsigned long fadeTime;
 
 void setup() {
   Serial.begin(115200);
@@ -28,30 +27,44 @@ void loop() {
   
   int inputVal = analogRead(analogReg);
   int mappedValue = map(inputVal, 0, 1023, 0, 100);
-  int buttonState = digitalRead(key1);
-  int buttonTwoState = digitalRead(key2);
+  int buttonOne = digitalRead(key1);
+  int buttonTwo = digitalRead(key2);
   fadeAmount = mappedValue;
 
 
-  if (buttonState == HIGH){
-    keyOneCounter++;
+  if (buttonOne == HIGH){
+    //keyOneCounter++;
+    buttonOneState = true;
     Serial.println("key 1 pressed");
     delay(300);
   }
 
-  if (buttonTwoState == HIGH){
+  if (buttonTwo == HIGH){
     keyTwoCounter++;
     Serial.println("key 2 pressed");
     delay(300);
   }
   
-  if (keyOneCounter == 0 && keyTwoCounter == 0){ 
-      Serial.println("Key1Count Key2Count = 0");
+  if (buttonOneState == false){ 
+      Serial.println("buttonOneState = false");
       RGB_color(0, 0, 0); 
     } else {
-      keyOnePress(keyOneCounter);
+      //keyOnePress(keyOneCounter);
+      buttonOneState = true;
+      keyOnePressState(buttonOneState);
     }
 
+/*
+  if (buttonOneState == false && keyTwoCounter == 0){ 
+      Serial.println("buttonOneState = false");
+      RGB_color(0, 0, 0); 
+    } else {
+      //keyOnePress(keyOneCounter);
+      keyOnePressState(buttonOneState);
+      buttonOneState = true;
+
+    }
+*/
   
   if (keyTwoCounter == 0){
       Serial.println("Key2Count = 0");
@@ -60,9 +73,9 @@ void loop() {
     fade(fadeAmount, brightness);
   } else if (keyTwoCounter == 2){
     //rainbow(rDirection, gDirection, bDirection, redValue, greenValue, blueValue);
-    //rainbow(); 
-    if (millis() > time_for_fadestep){
-      rainbow(); 
+    if (millis() > fadeTime){
+      //rainbow(); 
+      setColor(redValue, greenValue, blueValue);
     }
   }
   if(keyTwoCounter == 3){
@@ -93,5 +106,31 @@ void rainbow(){
     if (blueValue >= 255 || blueValue <= 0){
         bDirection = bDirection * -1;
     }
-    time_for_fadestep = millis() + 50;
+    fadeTime = millis() + 50;
+}
+
+
+void setColor(int red, int green, int blue) {
+
+    analogWrite(redPin, redValue);
+    analogWrite(greenPin, greenValue);
+    analogWrite(bluePin, blueValue); 
+
+    if ( redValue < red ) redValue += 1;
+    if ( redValue > red ) redValue -= 1;
+
+    if ( greenValue < green ) greenValue += 1;
+    if ( greenValue > green ) greenValue -= 1;
+
+    if ( greenValue < blue ) greenValue += 1;
+    if ( greenValue > blue ) greenValue -= 1;
+
+    //_setColor();
+    fadeTime = millis() + 50;
+}
+
+void _setColor() {
+  analogWrite(redPin, redValue);
+  analogWrite(greenPin, greenValue);
+  analogWrite(bluePin, blueValue); 
 }
