@@ -9,14 +9,30 @@ int delayTime = 500;
 int fadeAmount = 1;
 int brightness = 0;
 
-
-enum LedStates{ON, OFF};
+// Led state
+enum class LedStates {
+  ON, 
+  OFF 
+};
 LedStates ledState;
 
-enum SwitchStates {FADE, RAINBOW};
+// Led mode
+enum class SwitchStates {
+  FADE,
+  RAINBOW
+};
+SwitchStates switchState;
 
-enum Colors {RED, GREEN, BLUE};
-Colors Color;
+// Led Colors
+enum Colors {
+  RED,
+  GREEN,
+  BLUE,
+  NONE 
+};
+Colors color;
+
+
 unsigned long fadeTime;
 
 void setup() {
@@ -27,10 +43,11 @@ void setup() {
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
+  color = NONE;
 }
 
 void loop() {
-  
+
 
   int inputVal = analogRead(analogReg);
   int mappedValue = map(inputVal, 0, 1023, 0, 100);
@@ -38,43 +55,148 @@ void loop() {
   int buttonTwo = digitalRead(key2);
   fadeAmount = mappedValue;
 
-
+  /*
   if (buttonTwo == HIGH) {
-      if(ledState == ON){
-        //LedStates ledState = ON;
-        //digitalWrite(redPin, HIGH);
-        //toggleMachine();
-        //Color:RED;
-        colorMachine();
-      } else {
-          LedStates ledState = ON;
-          toggleMachine();
+    if(ledState == ON) {
+      if(color == Colors::RED) {
+           Serial.println("RED TO GREEN");
+           color == Colors::GREEN;
+      } else if (color == Colors::GREEN){
+           Serial.println("GREEN TO BLUE");          
+           color == Colors::BLUE;
+      } else if (color == Colors::BLUE) {
+           Serial.println("BLUE TO NONE");
+           color == Colors::NONE;
+      } else if (color == Colors::NONE){
+           Serial.println("NONE TO LED OFF");
+           color == Colors::NONE;
+           LedStates ledState = OFF;
       }
- }
-  
-  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
-  if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
+    } else {
+      LedStates ledState = ON;
+      color == Colors::RED;
+      Serial.println("LED ON, COLOR RED");
+    }
+  //toggleMachine();
+    //colorMachine();
+  }
+  */
 
+  // LED STATE 
+   if (buttonTwo == HIGH) {
+     stateKeeper();
+     /*
+     switch(ledState){
+       case LedStates::ON:
+          colorMachinima();
+          break;
+
+       case LedStates::OFF:
+        ledState = LedStates::ON;
+        if(color == NONE){
+          color = RED;
+          Serial.println("Color = none, led = off");
+        }
+        break;
+        */
+     }
+     /*
+     if(ledState == LedStates::OFF && color == NONE){
+      ledState = LedStates::ON;
+      color = RED;
+      Serial.println("LED ON, COLOR RED");
+     } else if(ledState == LedStates::ON) {
+      colorMachinima();
+     }
+      
+      switch(color){
+        case RED:
+           Serial.println("RED TO GREEN");
+           color = GREEN;
+           break;
+        case GREEN:
+           Serial.println("GREEN TO BLUE");          
+           color = BLUE;
+           break;
+        case BLUE:
+           Serial.println("BLUE TO NONE");
+           color = NONE;
+           break;
+        case NONE:
+           Serial.println("NONE TO LED OFF");
+           color = NONE;
+           ledState = OFF;
+           break;
+      }
+    } else if (ledState == OFF && color == NONE){
+      Serial.println("ledState = on && color = none");
+
+    } else {
+      ledState = ON;
+      color = RED;
+      Serial.println("LED ON, COLOR RED");
+    }
+    */
+    
 }
 
-void colorMachine(){
-    if(Color == RED){
-        Serial.println("hey");
+void stateKeeper(){
+  switch(ledState){
+    case LedStates::ON:
+        colorMachinima();
+        break;
+
+    case LedStates::OFF:
+      ledState = LedStates::ON;
+      if(color == NONE){
+        color = RED;
+        Serial.println("Color = none, led = off");
+      }
+      break;
     }
 }
 
+void colorMachinima(){
+      switch(color){
+        case RED:
+           Serial.println("RED TO GREEN");
+           color = GREEN;
+           break;
+        case GREEN:
+           Serial.println("GREEN TO BLUE");          
+           color = BLUE;
+           break;
+        case BLUE:
+           Serial.println("BLUE TO NONE");
+           color = NONE;
+           break;
+        case NONE:
+           Serial.println("NONE TO LED OFF");
+           ledState = LedStates::OFF;
+           break;
+    }
+}
+
+/*
+void colorMachine(){
+    if(color == Colors::RED){
+        Serial.println("RED");
+    } else{
+        Serial.println("not red");
+    }
+}
+
+*/
 
 void toggleMachine() {
   switch (ledState) {
-    case OFF: { 
+    case LedStates::OFF: 
       digitalWrite(redPin, 255);
-      ledState = ON;
+      ledState = LedStates::ON;
       break;
-    }
-    case ON: { 
+    case LedStates::ON: 
       digitalWrite(redPin, 0);
-      ledState = OFF;
+      ledState = LedStates::OFF;
       break;
-    }
   }
 }
