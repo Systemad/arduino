@@ -1,6 +1,5 @@
-#include "functions.h"
-#include "pins.h"
-
+#include "functions.h" // functions handler
+#include "pins.h" // pin declarations
 
 int keyOneCounter = 0;
 int keyTwoCounter = 0;
@@ -10,22 +9,19 @@ int delayTime = 500;
 int fadeAmount = 1;
 int brightness = 0;
 
-unsigned long currentTime;
-unsigned long loopTime;
+const long interval = 1000;    
+unsigned long previousMillis = 0; 
 
+unsigned long time_for_fadestep;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Started...");
   pinMode(analogReg, INPUT);
   pinMode(key1, INPUT);
   pinMode(key2, INPUT);
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
-
-  currentTime = millis();
-  loopTime = currentTime;
 }
 
 void loop() {
@@ -34,9 +30,9 @@ void loop() {
   int mappedValue = map(inputVal, 0, 1023, 0, 100);
   int buttonState = digitalRead(key1);
   int buttonTwoState = digitalRead(key2);
-  currentTime = millis();
   fadeAmount = mappedValue;
-  
+
+
   if (buttonState == HIGH){
     keyOneCounter++;
     Serial.println("key 1 pressed");
@@ -50,7 +46,7 @@ void loop() {
   }
   
   if (keyOneCounter == 0 && keyTwoCounter == 0){ 
-      Serial.println("Key1Count + Key2Count = 0");
+      Serial.println("Key1Count Key2Count = 0");
       RGB_color(0, 0, 0); 
     } else {
       keyOnePress(keyOneCounter);
@@ -64,11 +60,10 @@ void loop() {
     fade(fadeAmount, brightness);
   } else if (keyTwoCounter == 2){
     //rainbow(rDirection, gDirection, bDirection, redValue, greenValue, blueValue);
-    rainbow(); 
-    //if(currentTime >=(loopTime + 30)){
-    //  rainbow(); 
-    //  loopTime = currentTime;
-    //}
+    //rainbow(); 
+    if (millis() > time_for_fadestep){
+      rainbow(); 
+    }
   }
   if(keyTwoCounter == 3){
     keyTwoCounter = 0;
@@ -98,4 +93,5 @@ void rainbow(){
     if (blueValue >= 255 || blueValue <= 0){
         bDirection = bDirection * -1;
     }
+    time_for_fadestep = millis() + 50;
 }
