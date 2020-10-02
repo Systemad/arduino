@@ -100,7 +100,7 @@ void loop() {
         break;
         */
      }
-     /*
+     /* 
      if(ledState == LedStates::OFF && color == NONE){
       ledState = LedStates::ON;
       color = RED;
@@ -143,12 +143,17 @@ void loop() {
 void stateKeeper(){
   switch(ledState){
     case LedStates::ON:
+      if(color == NONE){
         colorMachinima();
-        break;
+      } else {
+        Serial.println("color none led on");
+        colorMachinima();
+      }
+      break;
 
     case LedStates::OFF:
-      ledState = LedStates::ON;
       if(color == NONE){
+        ledState = LedStates::ON;
         color = RED;
         Serial.println("Color = none, led = off");
       }
