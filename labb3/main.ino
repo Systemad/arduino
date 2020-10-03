@@ -90,5 +90,5 @@ void rainbow(){
     if (blueValue >= 255 || blueValue <= 0){
         bDirection = bDirection * -1;
     }
-    time_for_fadestep = millis() + 50;
+    fadeMillis = millis() + 50;
 }
