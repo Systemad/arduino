@@ -48,3 +48,13 @@ void RGB_color(int redValue, int greenValue, int blueValue)
   analogWrite(greenPin, greenValue);
   analogWrite(bluePin, blueValue);
 }
+
+
+void initialize(){
+  pinMode(analogReg, INPUT);
+  pinMode(key1, INPUT);
+  pinMode(key2, INPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+}

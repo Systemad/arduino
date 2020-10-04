@@ -1,7 +1,7 @@
 #include "functions.h"
 #include "pins.h"
 
-char in_char; // Serial monitor mode
+//char in_char; // Serial monitor mode
 
 
 void fade(int brightness, int fadeAmount){
