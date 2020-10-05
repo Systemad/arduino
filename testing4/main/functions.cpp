@@ -21,7 +21,6 @@ int brightness = 0;
 int inputVal;
 int mappedValue;
 
-
 void fade(int brightness, int fadeAmount){
     analogWrite(redPin, brightness);
     analogWrite(greenPin, 0);
@@ -54,7 +53,27 @@ void rainbow(int mappedValue){
     fadeMillis = millis() + mappedValue;
 }
 
-void toggleLedColor(int keyOneCounter){    
+void toggleLedColor(int keyOneCounter){  
+
+    switch(keyOneCounter){
+      case 1:
+        RGB_color(255, 0, 0);
+        break;
+      case 2:
+        RGB_color(0, 255, 0);
+        break;
+      case 3:
+        RGB_color(0, 0, 255);
+        break;
+      case 4:
+        RGB_color(0, 0, 0);
+        Serial.println("hello");
+        keyOneCounter = 0;
+        break;
+    }
+
+
+    /*
   if (keyOneCounter == 1){
     //Serial.println("Red.");
     RGB_color(255, 0, 0);
@@ -68,8 +87,8 @@ void toggleLedColor(int keyOneCounter){
     //Serial.println("Counter reset");
     keyOneCounter = 0;
   }
+  */
 }
-
 
 void initialize(){
   pinMode(analogReg, INPUT);
@@ -88,7 +107,7 @@ void RGB_color(int redValue, int greenValue, int blueValue)
   analogWrite(bluePin, blueValue);
 }
 
-/**
+/*
 void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue) {
   while (Serial.available()){
     in_char = Serial.read();
@@ -133,6 +152,30 @@ void input_handler(int keyOneCounter, int keyTwoCounter){
       toggleLedColor(keyOneCounter);
     }
 
+  switch(keyTwoCounter){
+    case 0:
+      RGB_color(0, 0, 0);
+      break;
+      
+    case 1:
+      fade(mappedValue, brightness);
+      break;
+      
+    case 2:
+      if (millis() > fadeMillis){
+        //rainbow(); 
+        rainbow(mappedValue);
+       }
+       break;
+   
+    case 3:
+      RGB_color(0, 0, 0);
+      keyTwoCounter = 0;
+      break;
+
+  }
+
+/*
   if (keyTwoCounter == 0){
       RGB_color(0, 0, 0);
   } else if (keyTwoCounter == 1){
@@ -146,6 +189,14 @@ void input_handler(int keyOneCounter, int keyTwoCounter){
   if(keyTwoCounter == 3){
     keyTwoCounter = 0;
   }
-  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
-  if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
+  */
+
+  
+  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0)
+    keyOneCounter=0;
+
+  
+  if (keyTwoCounter == 1,2 && keyOneCounter != 0)
+    keyTwoCounter=0;
+    
 }

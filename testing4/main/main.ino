@@ -15,14 +15,6 @@ int rDirection = -1;
 int gDirection = 1;
 int bDirection = -1;
 
-
-//int fadeAmount = 1;
-//int brightness = 0;
-
-
-//int mappedValue;
-//unsigned long fadeMillis;
-
 //char in_char;
 
 void setup() {
@@ -32,8 +24,7 @@ void setup() {
 }
 
 void loop() {
-  //int inputVal = analogRead(analogReg); // Potentiometer
-  //mappedValue = map(inputVal, 0, 1023, 0, 100); // Map it from 0-100
+  
   // Buttons Key1 and Key2
   int keyOne = digitalRead(key1);
   int keyTwo = digitalRead(key2);
@@ -47,33 +38,12 @@ void loop() {
     keyTwoCounter++;
     delay(300);
   }
-/*
-  if (keyOneCounter == 0 && keyTwoCounter == 0){ 
-      RGB_color(0, 0, 0); 
-    } else {
-      toggleLedColor(keyOneCounter);
-    }
-
   
-  if (keyTwoCounter == 0){
-      RGB_color(0, 0, 0);
-  } else if (keyTwoCounter == 1){
-    fade(mappedValue, brightness);
-  } else if (keyTwoCounter == 2){
-    if (millis() > fadeMillis){
-      rainbow(); 
-    }
-  }
-  if(keyTwoCounter == 3){
-    keyTwoCounter = 0;
-  }
-  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
-  if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
-  */
   //serialRemote(keyOneCounter, keyTwoCounter, brightness, fadeMillis, mappedValue);
   input_handler(keyOneCounter, keyTwoCounter);
   //serialRemote(keyOneCounter, keyTwoCounter, mappedValue);
   serialRemote();
+  //logicCheck();
 }
 
 void serialRemote() {
