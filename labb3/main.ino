@@ -109,6 +109,10 @@ void select(){
       }
       break;
     case '3':
+      Serial.println("LED Toggle mode on, enter 3 again to change color");
+        toggleLedColor(keyOneCounter);
+      break;  
+  case '4':
       Serial.println("Turned off modes");
       keyTwoCounter = 0;
       keyOneCounter = 0;

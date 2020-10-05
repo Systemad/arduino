@@ -40,16 +40,16 @@ void rainbow(int redValue, int greenValue, int blueValue, int rDirection, int gD
 */
 void toggleLedColor(int keyOneCounter){    
   if (keyOneCounter == 1){
-    Serial.println("Red.");
+    //Serial.println("Red.");
     RGB_color(255, 0, 0);
   } else if (keyOneCounter == 2){
-    Serial.println("Green.");
+    //Serial.println("Green.");
     RGB_color(0, 255, 0);
   } else if (keyOneCounter == 3){
-    Serial.println("Blue.");
+    //Serial.println("Blue.");
     RGB_color(0, 0, 255);
   } else if (keyOneCounter == 4){
-    Serial.println("Counter reset");
+    //Serial.println("Counter reset");
     keyOneCounter = 0;
   }
 }

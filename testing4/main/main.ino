@@ -6,16 +6,18 @@ int keyTwoCounter = 0;
 int redValue = 254;
 int greenValue = 1;
 int blueValue = 255;
-int mappedValue;
 
-int rDirection = -1, gDirection = 1, bDirection = -1;
-int delayTime = 500;
+int rDirection = -1
+int gDirection = 1
+int bDirection = -1;
+
 int fadeAmount = 1;
 int brightness = 0;
 
-char in_char;
-
+int mappedValue;
 unsigned long fadeMillis;
+
+char in_char;
 
 void setup() {
   Serial.begin(9600);
@@ -35,12 +37,11 @@ void loop() {
     keyOneCounter++;
     delay(300);
   }
-
   if (keyTwo == HIGH){
     keyTwoCounter++;
     delay(300);
   }
-  
+
   if (keyOneCounter == 0 && keyTwoCounter == 0){ 
       RGB_color(0, 0, 0); 
     } else {
@@ -60,8 +61,8 @@ void loop() {
   if(keyTwoCounter == 3){
     keyTwoCounter = 0;
   }
-  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
-  if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
+  if (keyOneCounter <=3 && keyTwoCounter > 0) keyOneCounter=0;
+  if (keyTwoCounter == 1,2 && keyOneCounter > 0) keyTwoCounter=0;
 
   //serialRemote(keyOneCounter, keyTwoCounter, brightness, fadeMillis, mappedValue);
   serialRemote();
@@ -98,14 +99,12 @@ void select(){
   {
     case '1':
       Serial.println("Selected fade mode");
-      //fade(mappedValue, brightness);
       keyTwoCounter = 1;
       break;
     case '2':
       Serial.println("Selected Rainbow mode");
        if (millis() > fadeMillis){
         keyTwoCounter = 2;
-        //rainbow();
       }
       break;
     case '3':
