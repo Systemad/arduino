@@ -13,7 +13,7 @@ int gDirection = 1;
 int bDirection = -1;
 */
 
-unsigned long fadeMillis;
+//unsigned long fadeMillis;
 int fadeAmount = 1;
 int brightness = 0;
 
@@ -66,7 +66,6 @@ void toggleLedColor(int keyOneCounter){
         break;
       case 4:
         RGB_color(0, 0, 0);
-        Serial.println("hello");
         keyOneCounter = 0;
         break;
     }
@@ -115,15 +114,18 @@ void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue) {
   }
 }
 */
-
+/*
 void selectMode(int serialMode, int keyOneCounter, int keyTwoCounter){
 
   switch (serialMode)
   {
     case '1':
       Serial.println("Selected fade mode");
-      fade(mappedValue, brightness);
       keyTwoCounter = 1;
+      toggleLedColor(keyOneCounter);
+      
+      //fade(mappedValue, brightness);
+      //keyTwoCounter = 1;
       break;
     case '2':
       Serial.println("Selected Rainbow mode");
@@ -133,15 +135,13 @@ void selectMode(int serialMode, int keyOneCounter, int keyTwoCounter){
       break;
     case '3':
       Serial.println("Turned off modes");
-      keyTwoCounter = 0;
-      keyOneCounter = 0;
+      keyTwoCounter = 3;
+      keyOneCounter = 4;
       break;  
   }
 }
-
+*/
 void input_handler(int keyOneCounter, int keyTwoCounter){
-
-
   inputVal = analogRead(analogReg); // Potentiometer
   mappedValue = map(inputVal, 0, 1023, 0, 100); // Map it from 0-100
   

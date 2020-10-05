@@ -12,5 +12,5 @@ void initialize();
 void resetCounter(int key);
 
 void input_handler(int keyOneCounter, int keyTwoCounter);
-void selectMode(int serialMode, int keyOneCounter, int keyTwoCounter);
+void selectMode(int mode);
 //void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue);

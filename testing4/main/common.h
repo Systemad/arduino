@@ -18,4 +18,6 @@ extern int brightness; // = 0;
 extern int keyOneCounter; // = 0;
 extern int keyTwoCounter; // = 0;
 
+extern unsigned long fadeMillis;
+
 #endif

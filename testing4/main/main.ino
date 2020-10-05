@@ -15,6 +15,8 @@ int rDirection = -1;
 int gDirection = 1;
 int bDirection = -1;
 
+unsigned long fadeMillis;
+
 void setup() {
   Serial.begin(9600);
   initialize();
@@ -49,7 +51,40 @@ void serialRemote() {
   while (Serial.available()){
     serialMode = Serial.read();
     //Serial.println(in_char);
-    selectMode(serialMode, keyOneCounter, keyTwoCounter);
+    selectMode(serialMode);
+  }
+}
+
+void selectMode(int mode){
+
+  switch (serialMode)
+  {
+    case '1':
+      Serial.println("Selected fade mode");
+      keyTwoCounter = 1;
+      //toggleLedColor(keyOneCounter);
+      
+      //fade(mappedValue, brightness);
+      //keyOneCounter = 1;
+      input_handler(keyOneCounter, keyTwoCounter);
+      break;
+    case '2':
+      Serial.println("Selected Rainbow mode");
+       if (millis() > fadeMillis){
+        keyTwoCounter = 2;
+      }
+      break;
+    case '3':
+      Serial.println("Toggle color mode");
+      keyOneCounter++;
+      input_handler(keyOneCounter, keyTwoCounter);
+      break;
+
+    case '4':
+      Serial.println("Turned off modes");
+      keyTwoCounter = 3;
+      keyOneCounter = 4;
+      break;  
   }
 }
 
