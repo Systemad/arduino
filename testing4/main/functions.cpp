@@ -1,11 +1,28 @@
+#include "common.h"
 #include "functions.h"
 #include "pins.h"
 
-//char in_char; // Serial monitor mode
+//char in_char; // Serial mode
+
+/*
+int redValue = 254;
+int greenValue = 1;
+int blueValue = 255;
+
+int rDirection = -1;
+int gDirection = 1;
+int bDirection = -1;
+*/
+
+unsigned long fadeMillis;
+int fadeAmount = 1;
+int brightness = 0;
+
+int inputVal;
+int mappedValue;
 
 
 void fade(int brightness, int fadeAmount){
-    Serial.println("Fade.");
     analogWrite(redPin, brightness);
     analogWrite(greenPin, 0);
     analogWrite(bluePin, 0);
@@ -15,9 +32,8 @@ void fade(int brightness, int fadeAmount){
       fadeAmount = fadeAmount;
     }
 }
-/*
-void rainbow(int redValue, int greenValue, int blueValue, int rDirection, int gDirection, int bDirection){
-    Serial.println("Rainbow mode ON.");
+
+void rainbow(int mappedValue){
     analogWrite(redPin, redValue);
     analogWrite(greenPin, greenValue);
     analogWrite(bluePin, blueValue);
@@ -25,19 +41,19 @@ void rainbow(int redValue, int greenValue, int blueValue, int rDirection, int gD
     redValue = redValue + rDirection;  
     greenValue = greenValue + gDirection;
     blueValue = blueValue + bDirection;
-        
+    
     if (redValue >= 255 || redValue <= 0){
         rDirection = rDirection * -1;
-    }
+      }
     if (greenValue >= 255 || greenValue <= 0){
-        gDirection = gDirection * -1;
+          gDirection = gDirection * -1;
     }
     if (blueValue >= 255 || blueValue <= 0){
         bDirection = bDirection * -1;
     }
-    delay(100); 
+    fadeMillis = millis() + mappedValue;
 }
-*/
+
 void toggleLedColor(int keyOneCounter){    
   if (keyOneCounter == 1){
     //Serial.println("Red.");
@@ -72,18 +88,19 @@ void RGB_color(int redValue, int greenValue, int blueValue)
   analogWrite(bluePin, blueValue);
 }
 
-/*
-void serialRemote(int keyOneCounter, int keyTwoCounter, int brightness, int fadeMillis, int mappedValue) {
+/**
+void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue) {
   while (Serial.available()){
     in_char = Serial.read();
     //Serial.println(in_char);
-    select(keyOneCounter, keyTwoCounter, brightness, fadeMillis, mappedValue);
+    select(keyOneCounter, keyTwoCounter, mappedValue);
   }
 }
+*/
 
-void select(int keyOneCounter, int keyTwoCounter, int brightness, int fadeMillis, int mappedValue){
+void select(int serialMode, int keyOneCounter, int keyTwoCounter){
 
-  switch (in_char)
+  switch (serialMode)
   {
     case '1':
       Serial.println("Selected fade mode");
@@ -103,4 +120,32 @@ void select(int keyOneCounter, int keyTwoCounter, int brightness, int fadeMillis
       break;  
   }
 }
-*/
+
+void input_handler(int keyOneCounter, int keyTwoCounter){
+
+
+  inputVal = analogRead(analogReg); // Potentiometer
+  mappedValue = map(inputVal, 0, 1023, 0, 100); // Map it from 0-100
+  
+  if (keyOneCounter == 0 && keyTwoCounter == 0){ 
+      RGB_color(0, 0, 0); 
+    } else {
+      toggleLedColor(keyOneCounter);
+    }
+
+  if (keyTwoCounter == 0){
+      RGB_color(0, 0, 0);
+  } else if (keyTwoCounter == 1){
+    fade(mappedValue, brightness);
+  } else if (keyTwoCounter == 2){
+    if (millis() > fadeMillis){
+      //rainbow(); 
+      rainbow(mappedValue);
+    }
+  }
+  if(keyTwoCounter == 3){
+    keyTwoCounter = 0;
+  }
+  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
+  if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
+}
