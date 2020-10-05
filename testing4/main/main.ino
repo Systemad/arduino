@@ -15,8 +15,6 @@ int rDirection = -1;
 int gDirection = 1;
 int bDirection = -1;
 
-//char in_char;
-
 void setup() {
   Serial.begin(9600);
   initialize();
@@ -46,11 +44,12 @@ void loop() {
   //logicCheck();
 }
 
+
 void serialRemote() {
   while (Serial.available()){
     serialMode = Serial.read();
     //Serial.println(in_char);
-    select(serialMode, keyOneCounter, keyTwoCounter);
+    selectMode(serialMode, keyOneCounter, keyTwoCounter);
   }
 }
 

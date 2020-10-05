@@ -2,7 +2,6 @@
 #include "functions.h"
 #include "pins.h"
 
-//char in_char; // Serial mode
 
 /*
 int redValue = 254;
@@ -117,7 +116,7 @@ void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue) {
 }
 */
 
-void select(int serialMode, int keyOneCounter, int keyTwoCounter){
+void selectMode(int serialMode, int keyOneCounter, int keyTwoCounter){
 
   switch (serialMode)
   {
