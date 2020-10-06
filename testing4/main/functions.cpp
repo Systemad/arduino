@@ -2,18 +2,6 @@
 #include "functions.h"
 #include "pins.h"
 
-
-/*
-int redValue = 254;
-int greenValue = 1;
-int blueValue = 255;
-
-int rDirection = -1;
-int gDirection = 1;
-int bDirection = -1;
-*/
-
-//unsigned long fadeMillis;
 int fadeAmount = 1;
 int brightness = 0;
 
@@ -69,23 +57,6 @@ void toggleLedColor(int keyOneCounter){
         keyOneCounter = 0;
         break;
     }
-
-
-    /*
-  if (keyOneCounter == 1){
-    //Serial.println("Red.");
-    RGB_color(255, 0, 0);
-  } else if (keyOneCounter == 2){
-    //Serial.println("Green.");
-    RGB_color(0, 255, 0);
-  } else if (keyOneCounter == 3){
-    //Serial.println("Blue.");
-    RGB_color(0, 0, 255);
-  } else if (keyOneCounter == 4){
-    //Serial.println("Counter reset");
-    keyOneCounter = 0;
-  }
-  */
 }
 
 void initialize(){
@@ -105,46 +76,10 @@ void RGB_color(int redValue, int greenValue, int blueValue)
   analogWrite(bluePin, blueValue);
 }
 
-/*
-void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue) {
-  while (Serial.available()){
-    in_char = Serial.read();
-    //Serial.println(in_char);
-    select(keyOneCounter, keyTwoCounter, mappedValue);
-  }
-}
-*/
-/*
-void selectMode(int serialMode, int keyOneCounter, int keyTwoCounter){
-
-  switch (serialMode)
-  {
-    case '1':
-      Serial.println("Selected fade mode");
-      keyTwoCounter = 1;
-      toggleLedColor(keyOneCounter);
-      
-      //fade(mappedValue, brightness);
-      //keyTwoCounter = 1;
-      break;
-    case '2':
-      Serial.println("Selected Rainbow mode");
-       if (millis() > fadeMillis){
-        keyTwoCounter = 2;
-      }
-      break;
-    case '3':
-      Serial.println("Turned off modes");
-      keyTwoCounter = 3;
-      keyOneCounter = 4;
-      break;  
-  }
-}
-*/
 void input_handler(int keyOneCounter, int keyTwoCounter){
   inputVal = analogRead(analogReg); // Potentiometer
   mappedValue = map(inputVal, 0, 1023, 0, 100); // Map it from 0-100
-  
+
   if (keyOneCounter == 0 && keyTwoCounter == 0){ 
       RGB_color(0, 0, 0); 
     } else {
@@ -162,7 +97,6 @@ void input_handler(int keyOneCounter, int keyTwoCounter){
       
     case 2:
       if (millis() > fadeMillis){
-        //rainbow(); 
         rainbow(mappedValue);
        }
        break;
@@ -171,31 +105,36 @@ void input_handler(int keyOneCounter, int keyTwoCounter){
       RGB_color(0, 0, 0);
       keyTwoCounter = 0;
       break;
-
   }
+}
 
-/*
-  if (keyTwoCounter == 0){
-      RGB_color(0, 0, 0);
-  } else if (keyTwoCounter == 1){
-    fade(mappedValue, brightness);
-  } else if (keyTwoCounter == 2){
-    if (millis() > fadeMillis){
-      //rainbow(); 
-      rainbow(mappedValue);
-    }
+void selectMode(int mode){
+
+  switch (mode)
+  {
+    case '1':
+      Serial.println("Selected fade mode.");
+      keyTwoCounter = 1;
+      break;
+    case '2':
+      Serial.println("Selected Rainbow mode");
+       keyTwoCounter = 2;
+      break;
+    case '3':
+      Serial.println("Toggle color mode");
+      keyTwoCounter = 0;
+      keyOneCounter++;
+      break;
+
+    case '4':
+      Serial.println("Turned off modes");
+      keyTwoCounter = 3;
+      keyOneCounter = 4;
+      break;  
   }
-  if(keyTwoCounter == 3){
-    keyTwoCounter = 0;
-  }
-  */
+}
 
-  
-  if (keyOneCounter == 1,2,3 && keyTwoCounter != 0)
-    keyOneCounter=0;
-
-  
-  if (keyTwoCounter == 1,2 && keyOneCounter != 0)
-    keyTwoCounter=0;
-    
+void welcomeMessage(){
+  Serial.println("Click button 1 to toggle LED colors. Click button 2 to toggle between fade mode and rainbow mode");  
+  Serial.println("You can also serial console to trigger functions. Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all");
 }

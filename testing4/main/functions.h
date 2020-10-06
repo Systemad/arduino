@@ -9,8 +9,7 @@ void rainbow(int mappedValue);
 void toggleLedColor(int keyOneCounter);
 void RGB_color(int redValue, int greenValue, int blueValue);
 void initialize();
-void resetCounter(int key);
-
 void input_handler(int keyOneCounter, int keyTwoCounter);
 void selectMode(int mode);
-//void serialRemote(int keyOneCounter, int keyTwoCounter, int mappedValue);
+
+void welcomeMessage();
