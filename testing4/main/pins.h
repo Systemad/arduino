@@ -1,3 +1,7 @@
+/*
+ * Pin Declarations
+ */
+
 #define analogReg A0
 #define key1 8
 #define key2 12

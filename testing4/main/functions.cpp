@@ -108,7 +108,7 @@ void input_handler(int keyOneCounter, int keyTwoCounter){
   }
 }
 
-void selectMode(int mode){
+void serial_handler(int mode){
 
   switch (mode)
   {
@@ -121,21 +121,21 @@ void selectMode(int mode){
        keyTwoCounter = 2;
       break;
     case '3':
-      Serial.println("Toggle color mode");
+      Serial.println("Selected Toggle color mode");
       keyTwoCounter = 0;
       keyOneCounter++;
       break;
 
     case '4':
-      Serial.println("Turned off modes");
-      keyTwoCounter = 3;
-      keyOneCounter = 4;
+      Serial.println("Selected Turned off modes");
+      keyTwoCounter = 0; // Resets both counters and modes
+      keyOneCounter = 0;
       break;  
   }
 }
 
 void welcomeMessage(){
-  Serial.println("Click button 1 to toggle LED colors. Click button 2 to toggle between fade mode and rainbow mode");  
-  Serial.println("You can also serial console to trigger functions. Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all");
-  Serial.println("Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all");
+  Serial.println("Click button 1 to toggle LED colors. Click button 2 to toggle between fade mode and rainbow mode.");  
+  Serial.println("You can also serial console to trigger functions.");
+  Serial.println("Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all.");
 }

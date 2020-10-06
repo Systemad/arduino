@@ -1,5 +1,5 @@
-#include "functions.h" // functions handler
-#include "pins.h" // pin declarations
+#include "functions.h" // Includes all functions
+#include "pins.h" // Pin Declarations
 #include "common.h"
 
 int keyOneCounter = 0;
@@ -39,15 +39,15 @@ void loop() {
 
   logic();
   input_handler(keyOneCounter, keyTwoCounter);
-  serialRemote();
+  serial_receiver();
   
 }
 
 
-void serialRemote() {
+void serial_receiver() {
   while (Serial.available()){
     int serialMode = Serial.read();
-    selectMode(serialMode);
+    serial_handler(serialMode);
   }
 }
 

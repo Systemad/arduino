@@ -1,6 +1,10 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+/*
+ * Global variables 
+ */
+ 
 extern int redValue; // = 254;
 extern int greenValue; // = 1;
 extern int blueValue; // = 255;
