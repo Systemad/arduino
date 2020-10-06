@@ -17,12 +17,11 @@ unsigned long fadeMillis;
 void setup() {
   Serial.begin(9600);
   initialize();
-  Serial.println("hello");
+  delay(300);
+  welcomeMessage();
 }
 
 void loop() {
-
-  welcomeMessage();
   
   // Buttons Key1 and Key2
   int keyOne = digitalRead(key1);

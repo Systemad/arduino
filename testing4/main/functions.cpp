@@ -137,4 +137,5 @@ void selectMode(int mode){
 void welcomeMessage(){
   Serial.println("Click button 1 to toggle LED colors. Click button 2 to toggle between fade mode and rainbow mode");  
   Serial.println("You can also serial console to trigger functions. Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all");
+  Serial.println("Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all");
 }
