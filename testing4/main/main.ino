@@ -4,6 +4,7 @@
 
 int keyOneCounter = 0;
 int keyTwoCounter = 0;
+
 int redValue = 254;
 int greenValue = 1;
 int blueValue = 255;
@@ -21,12 +22,10 @@ void setup() {
   welcomeMessage();
 }
 
-void loop() {
-  
+void loop() {  
   // Buttons Key1 and Key2
   int keyOne = digitalRead(key1);
   int keyTwo = digitalRead(key2);
- 
 
   if (keyOne == HIGH){
     keyOneCounter++;
@@ -40,9 +39,7 @@ void loop() {
   logic();
   input_handler(keyOneCounter, keyTwoCounter);
   serial_receiver();
-  
 }
-
 
 void serial_receiver() {
   while (Serial.available()){
@@ -51,9 +48,7 @@ void serial_receiver() {
   }
 }
 
-
 void logic(){
-
   if(keyOneCounter == 4){
     keyOneCounter = 0;
   }
@@ -63,7 +58,5 @@ void logic(){
   }
   
   if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
-
-  
   if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
 }
