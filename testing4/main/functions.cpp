@@ -8,6 +8,15 @@ int brightness = 0;
 int inputVal;
 int mappedValue;
 
+//int buttonOneState;             // current reading from keyOne
+//int lastButtonOneState = LOW;   // previous reading input keyOne
+
+//unsigned long lastDebounceTime = 0;
+//unsigned long debounceDelay = 50;
+
+//int keyOneCounter = 0;
+//int keyTwoCounter = 0;
+
 void fade(int brightness, int fadeAmount){
     analogWrite(redPin, brightness);
     analogWrite(greenPin, 0);
@@ -134,6 +143,23 @@ void serial_handler(int mode){
   }
 }
 
+/*
+void debouncer(int key){
+  if (key != lastButtonOneState) {
+    lastDebounceTime = millis();
+  }
+  
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    if (key != buttonOneState) {
+      buttonOneState = key;
+      if (buttonOneState == HIGH) {
+        keyOneCounter++;
+      }
+    }
+  }
+  lastButtonOneState = key; 
+}
+*/
 void welcomeMessage(){
   Serial.println("Click button 1 to toggle LED colors. Click button 2 to toggle between fade mode and rainbow mode.");  
   Serial.println("You can also serial console to trigger functions.");

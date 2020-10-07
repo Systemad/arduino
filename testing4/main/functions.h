@@ -23,3 +23,5 @@ void RGB_color(int redValue, int greenValue, int blueValue); // Writes LED color
 void input_handler(int keyOneCounter, int keyTwoCounter); // Input handler for fade(), rainbow() and toggleLedColor()
 
 void serial_handler(int mode); // Handles input from serial_reciever()
+
+void debouncer(int key);

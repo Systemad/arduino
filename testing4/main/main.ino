@@ -42,10 +42,12 @@ void loop() {
     lastDebounceTime = millis();
   }
 
+  //debouncer(keyOne);
+  
   if (keyTwo != lastButtonTwoState) {
     lastDebounceTime = millis();
   }
-
+  
   if ((millis() - lastDebounceTime) > debounceDelay) {
     if (keyOne != buttonOneState) {
       buttonOneState = keyOne;
@@ -55,7 +57,9 @@ void loop() {
     }
   }
   lastButtonOneState = keyOne;
+  
 
+  
   if ((millis() - lastDebounceTime) > debounceDelay) {
     if (keyTwo != buttonTwoState) {
       buttonTwoState = keyTwo;
@@ -65,6 +69,7 @@ void loop() {
     }
   }
   lastButtonTwoState = keyTwo;
+  
   
   logic();
   input_handler(keyOneCounter, keyTwoCounter);
@@ -94,6 +99,5 @@ void logic(){
   }
   
   if (keyOneCounter == 1,2,3 && keyTwoCounter != 0) keyOneCounter=0;
-
   if (keyTwoCounter == 1,2 && keyOneCounter != 0) keyTwoCounter=0;
 }
