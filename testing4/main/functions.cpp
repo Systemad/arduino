@@ -121,7 +121,7 @@ void serial_handler(int mode){
        keyTwoCounter = 2;
       break;
     case '3':
-      Serial.println("Selected Toggle color mode");
+      Serial.println("Selected Toggle color mode. Use 3 again to change color");
       keyTwoCounter = 0;
       keyOneCounter++;
       break;
