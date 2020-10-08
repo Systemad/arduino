@@ -4,6 +4,7 @@
 
 int keyOneCounter = 0;
 int keyTwoCounter = 0;
+
 int redValue = 254;
 int greenValue = 1;
 int blueValue = 255;

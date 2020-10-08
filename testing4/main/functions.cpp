@@ -130,6 +130,7 @@ void serial_handler(int mode){
 
 void welcomeMessage(){
   Serial.println("Buttons:");
-  Serial.println("Button 1: Toggle LED colors \nButton 2: Toggle between fade and rainbow mode\n");
-  Serial.println("Serial console:\nEnter 1 to Toggle LED Colors\nEnter 2 Toggle between rainbow and fade\n");
+  Serial.println("Button 1: Toggle LED colors \nButton 2: Toggle Fade mode\n");
+  Serial.println("Serial console:\nEnter 1 to toggle LED Colors\nEnter 2 to toggle fade\nEnter 3 to toggle Rainbow Mode");
+  Serial.println("Enter 4 to turn off");
 }
