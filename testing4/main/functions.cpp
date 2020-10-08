@@ -8,24 +8,10 @@ int brightness = 0;
 int inputVal;
 int mappedValue;
 
-//int buttonOneState;             // current reading from keyOne
-//int lastButtonOneState = LOW;   // previous reading input keyOne
-
-//unsigned long lastDebounceTime = 0;
-//unsigned long debounceDelay = 50;
-
-//int keyOneCounter = 0;
-//int keyTwoCounter = 0;
-
-void fade(int brightness, int fadeAmount){
+void fade(int brightness){
     analogWrite(redPin, brightness);
     analogWrite(greenPin, 0);
     analogWrite(bluePin, 0);
-    brightness += fadeAmount;
-
-    if (brightness <= 0 || brightness >= 255) {
-      fadeAmount = fadeAmount;
-    }
 }
 
 void rainbow(int mappedValue){
@@ -101,7 +87,7 @@ void input_handler(int keyOneCounter, int keyTwoCounter){
       break;
       
     case 1:
-      fade(mappedValue, brightness);
+      fade(mappedValue);
       break;
       
     case 2:
@@ -121,47 +107,30 @@ void serial_handler(int mode){
 
   switch (mode)
   {
+
     case '1':
-      Serial.println("Selected fade mode.");
-      keyTwoCounter = 1;
-      break;
-    case '2':
-      Serial.println("Selected Rainbow mode");
-       keyTwoCounter = 2;
-      break;
-    case '3':
-      Serial.println("Selected Toggle color mode. Use 3 again to change color");
+      Serial.println("Selected Toggle color mode. Enter 1 again to change color\n");
       keyTwoCounter = 0;
       keyOneCounter++;
       break;
-
+    case '2':
+      Serial.println("Selected fade mode. Enter 3 for rainbow mode\n");
+      keyTwoCounter = 1;
+      break;
+    case '3':
+      Serial.println("Selected Rainbow mode, Enter 4 to turn off\n");
+       keyTwoCounter = 2;
+      break;
     case '4':
-      Serial.println("Selected Turned off modes");
+      Serial.println("All modes has been turned off\n");
       keyTwoCounter = 0; // Resets both counters and modes
       keyOneCounter = 0;
       break;  
   }
 }
 
-/*
-void debouncer(int key){
-  if (key != lastButtonOneState) {
-    lastDebounceTime = millis();
-  }
-  
-  if ((millis() - lastDebounceTime) > debounceDelay) {
-    if (key != buttonOneState) {
-      buttonOneState = key;
-      if (buttonOneState == HIGH) {
-        keyOneCounter++;
-      }
-    }
-  }
-  lastButtonOneState = key; 
-}
-*/
 void welcomeMessage(){
-  Serial.println("Click button 1 to toggle LED colors. Click button 2 to toggle between fade mode and rainbow mode.");  
-  Serial.println("You can also serial console to trigger functions.");
-  Serial.println("Enter 1 for fade, 2 for rainbow, 3 for toggle color mode and 4 to turn off all.");
+  Serial.println("Buttons:");
+  Serial.println("Button 1: Toggle LED colors \nButton 2: Toggle between fade and rainbow mode\n");
+  Serial.println("Serial console:\nEnter 1 to Toggle LED Colors\nEnter 2 Toggle between rainbow and fade\n");
 }

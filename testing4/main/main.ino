@@ -27,7 +27,6 @@ unsigned long debounceDelay = 50;
 void setup() {
   Serial.begin(9600);
   initialize();
-  delay(300);
   welcomeMessage();
 }
 
