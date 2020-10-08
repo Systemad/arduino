@@ -107,7 +107,6 @@ void serial_handler(int mode){
 
   switch (mode)
   {
-
     case '1':
       Serial.println("Selected Toggle color mode. Enter 1 again to change color\n");
       keyTwoCounter = 0;
@@ -123,7 +122,7 @@ void serial_handler(int mode){
       break;
     case '4':
       Serial.println("All modes has been turned off\n");
-      keyTwoCounter = 0; // Resets both counters and modes
+      keyTwoCounter = 0;
       keyOneCounter = 0;
       break;  
   }

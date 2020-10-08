@@ -40,8 +40,6 @@ void loop() {
   if (keyOne != lastButtonOneState) {
     lastDebounceTime = millis();
   }
-
-  //debouncer(keyOne);
   
   if (keyTwo != lastButtonTwoState) {
     lastDebounceTime = millis();
@@ -56,8 +54,6 @@ void loop() {
     }
   }
   lastButtonOneState = keyOne;
-  
-
   
   if ((millis() - lastDebounceTime) > debounceDelay) {
     if (keyTwo != buttonTwoState) {
